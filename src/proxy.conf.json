@@ -1,0 +1,11 @@
+
+{
+    "/api": {
+      "target": "https://jsonplaceholder.typicode.com/users",
+      "secure": true,
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api": ""
+      }
+    }
+  }

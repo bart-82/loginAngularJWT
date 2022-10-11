@@ -1,0 +1,146 @@
+@import
+'../../assets/scss/abstracts/variables';
+@import
+'../../assets/scss/base/fonts';
+@import
+'../../assets/scss/abstracts/mixins',
+'../../assets/scss/abstracts/functions';
+
+body {
+    background-color: #4c4c4c;
+    font-family: sans-serif;
+    padding: 5%;
+    margin: 0; 
+
+  }
+
+  
+  
+  .todo-list {
+    background-color: #ffffff;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto; 
+    @include border-radius(10px);//uso il mixins creato dentro cartella abstract/mixins
+    overflow: hidden;
+  }
+  
+  .todo-body ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none; 
+  
+    li{
+      padding: addition($space, 8px) ;
+    display: flex;
+    justify-content: space-between;
+
+    &:hover{
+      background-color: darken(#ffffff, 5%);//qui usiamo una funzione di default di sass
+    }
+    }
+ 
+
+    }
+  
+  
+  .todo-footer {
+    padding: $space;
+    display: flex; 
+  
+    input{
+      flex-grow: 1;
+    margin-right: 10px;
+    }
+   
+  }
+  
+  
+  .todo-header{
+    background-color:$primary;
+    color: $secondary;
+    text-align: center;
+    padding: 5px;
+  
+    h1{
+      font-family: $futura;
+      margin: 0;
+    padding: 0;
+    font-weight: normal;
+    }
+  }
+
+  /*card*/
+
+.contact-card {
+    background-color: $secondary;
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .contact-header {
+    text-align: center;
+    color:$secondary;
+    background-color: $info;
+    padding: $space;
+
+    h1{
+        margin: 0;
+    padding: 0;
+    font-weight: normal;
+  }
+    }
+  
+  
+  
+    
+  
+  .contact-body {
+    display: flex;
+    flex-wrap: row;
+    padding: $space;
+    border-bottom: 1px solid $secondary;
+  }
+  
+  .contact-photo {
+    margin-right: $space;
+
+    img{
+        max-width: 200px;
+    height: auto;
+  }
+    }
+
+  .contact-details{
+    h1,
+    h2,
+    h3{
+        font-weight: normal;
+    }
+  }
+  
+  .contact-footer {
+    text-align: right;
+    padding: $space;
+
+    button{
+        color: $secondary;
+        border: 1px solid $info;
+        background-color: $info;
+        font-size: 12px;
+        padding: 10px;
+        text-decoration: none;
+
+        &:hover{
+            background-color:$secondary ;
+            color:$info;
+            border-color: $info;
+        }
+    }
+  }
+  
+  
+  
+
+  

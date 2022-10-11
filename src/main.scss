@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import
+    'assets/scss/abstracts/variables',
+    'assets/scss/abstracts/mixins';
+
+@import
+    'assets/scss/base/fonts';    
+
+@import
+    'assets/scss/base/base';
+
+@import
+    'assets/scss/components/login',
+    'assets/scss/components/sidebar',
+    'assets/scss/components/button',
+    'assets/scss/components/table-user';
+    
+@import
+    'assets/scss/vendors/bootstrap.scss'    
+
+
+
