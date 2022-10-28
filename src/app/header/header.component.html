@@ -23,7 +23,7 @@
               <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
           </li>
-        
+
           <li class="nav-item">
             <a class="nav-link disabled">Disabled</a>
           </li>
@@ -33,7 +33,7 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Utente
-              </a> 
+              </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li><a [routerLink]="['/login']" class="dropdown-item" href="#">Login</a></li>
                 <li><a class="dropdown-item" href="#">Logout</a></li>
@@ -43,7 +43,7 @@
             </li>
           </ul>
         </div>
-    
+
       </div>
     </div>
   </nav>
@@ -80,7 +80,7 @@
       <a [routerLink]="['/login']">Login</a>
     </li>
     <li *ngIf="isLoggedIn()" class="nav-list-item" (click)="logout()">
-      <a>Logout - {{ getUser() }}</a>
+      <a>Logout - {{ (userName$ | async)?.name }}</a>
     </li>
   </ul>
 </div>

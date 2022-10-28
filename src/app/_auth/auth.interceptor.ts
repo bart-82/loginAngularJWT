@@ -1,57 +1,57 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest,HttpErrorResponse } from "@angular/common/http";
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import {  Observable, throwError } from "rxjs";
-import{catchError} from 'rxjs/operators';
+import { Observable, throwError } from "rxjs";
+import { catchError } from 'rxjs/operators';
 import { LoginComponent } from "../login/login.component";
-import{Router} from '@angular/router'
+import { Router } from '@angular/router'
 
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor{
-constructor(private login:LoginComponent, private router:Router){}
- 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-      
-        const token=this.login.getToken();
+export class AuthInterceptor implements HttpInterceptor {
+  constructor(private login: LoginComponent, private router: Router) { }
 
-        req=this.addToken(req,token);
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        return next.handle(req).pipe(
-            catchError(
-                (err:HttpErrorResponse) => {
-                    console.log(err.status);
-                    if(err.status === 401) {
-                        this.router.navigate(['/login']);
-                    } 
-                    
-                    return throwError("Some thing is wrong");
-                }
-            )
-        );
+    const token = this.login.getToken();
+
+    req = this.addToken(req, token);
+
+    return next.handle(req).pipe(
+      catchError(
+        (err: HttpErrorResponse) => {
+          console.log(err.status);
+          // if (err.status === 401) {
+          //   this.router.navigate(['/login']);
+          // }
+
+          return throwError("Some thing is wrong");
+        }
+      )
+    );
 
 
 
-    }
+  }
 
-    private addToken(request:HttpRequest<any>,token:string|null){
-        return request.clone(
-            {
-                setHeaders:{
-                    Authorization:`${token}`
-                }
-            }
-        )
-    } 
- 
+  private addToken(request: HttpRequest<any>, token: string | null) {
+    return request.clone(
+      {
+        setHeaders: {
+          Authorization: `${token}`
+        }
+      }
+    )
+  }
 
-   /*  intercept(req:HttpRequest<any>,next:HttpHandler):Observable<HttpEvent<any>>{
-        const token=this.login.getToken
 
-        const correctReq=req.clone({
-            headers:req.headers.set('Authorization', `${token}`)
-    });
+  /*  intercept(req:HttpRequest<any>,next:HttpHandler):Observable<HttpEvent<any>>{
+       const token=this.login.getToken
 
-        return next.handle(correctReq);
-    } */
-    
+       const correctReq=req.clone({
+           headers:req.headers.set('Authorization', `${token}`)
+   });
+
+       return next.handle(correctReq);
+   } */
+
 }

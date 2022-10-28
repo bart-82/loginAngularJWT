@@ -7,11 +7,11 @@ import { TodolistComponent } from './todolist/todolist.component';
 import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
-  {path:"",component:HomeComponent},
-  {path:"login",component:LoginComponent},
-   {path:"user",component:UserComponent,canActivate:[AuthGuardGuard]},
-   {path:"list",component:TodolistComponent}
-  
+  { path: "", component: HomeComponent },
+  { path: "login", component: LoginComponent },
+  { path: "user", component: UserComponent, canActivate: [AuthGuardGuard] },
+  { path: "list", component: TodolistComponent }
+
 ];
 
 @NgModule({

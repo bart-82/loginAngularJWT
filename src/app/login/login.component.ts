@@ -13,45 +13,45 @@ import { LoginService } from '../services/login.service';
 export class LoginComponent implements OnInit {
 
   //model-driven approach (no template-driven approach)
-  logForm=new FormGroup({
-    email:new FormControl('',[Validators.required,Validators.minLength(5)]),
-    password:new FormControl("",[Validators.required,Validators.minLength(4)])
+  logForm = new FormGroup({
+    email: new FormControl('imafa82@gmail.com', [Validators.required, Validators.minLength(5)]),
+    password: new FormControl("test", [Validators.required, Validators.minLength(4)])
   })
 
-  isAuthenticationFailed$:Observable<boolean>
+  isAuthenticationFailed$: Observable<boolean>
 
-  
 
-  constructor(private loginservice:LoginService,private router:Router) {
-    this.isAuthenticationFailed$=this.loginservice.invalidCredentialObservable$;
-   }
+
+  constructor(private loginservice: LoginService, private router: Router) {
+    this.isAuthenticationFailed$ = this.loginservice.invalidCredentialObservable$;
+  }
 
   ngOnInit(): void {
   }
 
-  
-  public setToken(jwtToken:string){
-    localStorage.setItem("jwtToken",jwtToken)
+
+  public setToken(jwtToken: string) {
+    localStorage.setItem("jwtToken", jwtToken)
   }
 
-  public getToken():string|null{
+  public getToken(): string | null {
     return localStorage.getItem("jwtToken");
   }
 
- 
 
-  public isLoggedIn(){//o restituisce il token oppure null quindi(forse) null è uguale a false altrimenti se il token esiste è true
+
+  public isLoggedIn() {//o restituisce il token oppure null quindi(forse) null è uguale a false altrimenti se il token esiste è true
     return this.getToken();
   }
 
 
-  login(){
+  login() {
 
     console.log(this.logForm.value)
 
     this.loginservice.login(this.logForm.value)
-    
-    
+
+
   }
 
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoginComponent } from '../login/login.component';
+import { UserModel } from '../Models/user';
 import { LoginService } from '../services/login.service';
 import { SharedDataServiceService } from '../services/shared-data-service.service';
 import { UserComponent } from '../user/user.component';
@@ -13,67 +14,68 @@ import { UserComponent } from '../user/user.component';
 })
 export class HeaderComponent implements OnInit {
 
-  userName:string="";
-  userName$!:Observable<string>;
+  userName: string = "";
+  userName$!: Observable<UserModel>;
 
   constructor(
-    private loginService:LoginService,
-    private login:LoginComponent,
-    private router:Router,
-    private user:UserComponent,
-    private userDataservice:SharedDataServiceService
-    ) {
-      this.loginService.getUserLogged()//funziona solo se faccio refresh della pagina perchè prima non ho il token leea local storage
-      // this.userName$=loginService.userLogged$
-      // console.log(this.userName$)
-     }
+    private loginService: LoginService,
+    private login: LoginComponent,
+    private router: Router,
+    private user: UserComponent,
+    private userDataservice: SharedDataServiceService
+  ) {
+    this.loginService.getUserLogged()//funziona solo se faccio refresh della pagina perchè prima non ho il token leea local storage
+    // this.userName$=loginService.userLogged$
+    // console.log(this.userName$)
 
-    
+  }
+
+
 
   ngOnInit(): void {
 
-    this.userDataservice.cast.subscribe(user=> this.userName=user)
-    
+    // this.userDataservice.cast.subscribe(user=> this.userName=user)
+    this.userName$ = this.loginService.getUserLogged()
 
   }
 
-  getUser(){
-    this.userName$=this.loginService.userLogged$
-    return this.userName$
-  }
-  
+  // getUser(){
 
-  
+  //   return this.userName$
+  // }
 
-  public isLoggedIn(){
-   
+
+
+
+  public isLoggedIn() {
+
     return this.login.isLoggedIn();
   }
 
-  public logout(){
+  public logout() {
     console.log(this.login.isLoggedIn())
     this.loginService.logout();
     this.router.navigate(['']);
   }
 
-  list=[
+  list = [
     {
-      number:'1',
-      name:'Home',
-      link:''
-      
+      number: '1',
+      name: 'Home',
+      link: ''
+
     },
     {
-      number:'2',
-      name:'List',
-      link:'/list'
-      
+      number: '2',
+      name: 'List',
+      link: '/list'
+
     },
     {
-      number:'3',
-      name:'Analitics',
-      link:'/analitics'
-      
+      number: '3',
+      name: 'Analitics',
+      link: '/analitics'
+
     },
   ]
 
