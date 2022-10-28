@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Observable } from 'rxjs';
 import { LoginService } from '../services/login.service';
 
 @Component({
@@ -10,14 +12,24 @@ import { LoginService } from '../services/login.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private loginservice:LoginService,private router:Router) { }
+  //model-driven approach (no template-driven approach)
+  logForm=new FormGroup({
+    email:new FormControl('',[Validators.required,Validators.minLength(5)]),
+    password:new FormControl("",[Validators.required,Validators.minLength(4)])
+  })
+
+  isAuthenticationFailed$:Observable<boolean>
+
+  
+
+  constructor(private loginservice:LoginService,private router:Router) {
+    this.isAuthenticationFailed$=this.loginservice.invalidCredentialObservable$;
+   }
 
   ngOnInit(): void {
   }
 
-  email:string="";
-  password:string="";
-
+  
   public setToken(jwtToken:string){
     localStorage.setItem("jwtToken",jwtToken)
   }
@@ -26,32 +38,21 @@ export class LoginComponent implements OnInit {
     return localStorage.getItem("jwtToken");
   }
 
-  public clear(){
-    localStorage.clear();
-  }
+ 
 
   public isLoggedIn(){//o restituisce il token oppure null quindi(forse) null è uguale a false altrimenti se il token esiste è true
     return this.getToken();
   }
 
- 
 
-  login(loginForm:NgForm){
+  login(){
 
-    console.log(this.email)
+    console.log(this.logForm.value)
+
+    this.loginservice.login(this.logForm.value)
     
-    this.loginservice.login(loginForm.value).subscribe({
-      next:(response)=> {console.log(response);
-      this.setToken(response.token)
-      this.router.navigate(['/user'])
-      },
-      error:(error)=>{
-        console.log(error)}
-      // complete:()=>console.info('complete')  
-
     
-      })
-
   }
+
 
 }

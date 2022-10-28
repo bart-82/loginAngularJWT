@@ -2,10 +2,10 @@
     min-width: 100px;
     padding: 10px;
     font-size: 12px;
-    background-color: white;
+   background-color: white;
     @include border-radius(5px);
     border: 1px solid #333
-  }
+}
 
 .btn-warning{
     @extend .btn;
@@ -19,18 +19,37 @@
         border: white;
         color: white;
     }
+
+    
 }
 
 .btn-primary{
     @extend .btn;
     
-    color: blue;
+    color:black;
     border-color:blue;
 
     &:focus,
     &:hover{
-        background-color: blue;
-        color: white;
+        background-color: darken(blue,5%);
+        
         border: white;
     }
 }
+
+.btn-success{
+   
+
+    color: black;
+
+    &:focus,
+    &:hover{
+        background-color: darken($color: green, $amount: 10%);
+        
+        border: white;
+    }
+}     
+
+
+
+

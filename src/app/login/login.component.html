@@ -1,24 +1,96 @@
 <div id="wrapper-login">
-<div id="login">
+  <div id="login">
+    <form [formGroup]="logForm" class="rounded border" method="post">
+      <legend>Login</legend>
+      <div class="alert alert-danger" *ngIf="isAuthenticationFailed$ | async">
+        Invalid Email or Password
+      </div>
 
+      <div class="mb-3">
+        <input
+          name="email"
+          [ngClass]="{
+            'is-valid': logForm.controls.email.valid,
+            'is-invalid':
+              logForm.controls.email.invalid && logForm.controls.email.dirty
+          }"
+          formControlName="email"
+          type="email"
+          placeholder="Email"
+          class="form-control"
+          id="email"
+          aria-describedby="emailHelp"
+        />
+        <div
+          class="alert alert-danger"
+          [hidden]="
+            !(
+              logForm.controls.email.dirty &&
+              logForm.controls.email.errors?.['required']
+            )
+          "
+        >
+          Enter Email
+        </div>
+        <div
+          class="alert alert-danger"
+          [hidden]="
+            !(
+              logForm.controls.email.dirty &&
+              logForm.controls.email.errors?.['minlength']
+            )
+          "
+        >
+          Minimum 6 characters needed
+        </div>
+      </div>
+      <div class="mb-3">
+        <input
+          [ngClass]="{
+            'is-valid': logForm.controls.password.valid,
+            'is-invalid':
+              logForm.controls.password.invalid &&
+              logForm.controls.password.dirty
+          }"
+          formControlName="password"
+          type="password"
+          placeholder="Password"
+          class="form-control"
+          id="password"
+        />
+        <div
+          class="alert alert-danger"
+          [hidden]="
+            !(
+              logForm.controls.password.dirty &&
+              logForm.controls.password.errors?.['required']
+            )
+          "
+        >
+          Enter Password
+        </div>
+        <div
+          class="alert alert-danger"
+          [hidden]="
+            !(
+              logForm.controls.password.dirty &&
+              logForm.controls.password.errors?.['minlength']
+            )
+          "
+        >
+          Minimum 4 characters needed
+        </div>
+      </div>
 
-<form #loginForm="ngForm" method="post" (ngSubmit)="login(loginForm)">
-    <div class="mb-3">
-     
-      <input name="email" [(ngModel)]="email" type="email" placeholder="email" class="form-control" id="email" aria-describedby="emailHelp">
-      <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-    </div>
-    <div class="mb-3">
-      
-      <input name="password" [(ngModel)]="password"  type="password" class="form-control" id="password">
-    </div>
-    <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button value="Login" type="submit" class="btn btn-primary">Submit</button>
-  </form>
-
-</div>
-
+      <button
+        [disabled]="logForm.invalid"
+        value="Login"
+        type="button"
+        class="btn btn-primary"
+        (click)="login()"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
 </div>

@@ -1,24 +1,115 @@
+<div class="container-fluid pt-3">
+  <div class="card" *ngIf="!(IsAddNew$ | async); else AddNewContainer">
+    <h5 class="card-header">
+      <span class="navbar-brand mb-0 h1"
+        >Welcome {{ LoginUserFirstName }},</span
+      >
+    </h5>
+    <div class="card-body">
+      <div class="card-title">
+        <input
+          type="button"
+          value="+ Add New"
+          class="btn btn-primary"
+          (click)="AddNew()"
+        />
+      </div>
+      <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+          <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of Customers$ | async">
+            <td>{{ item.firstN }}</td>
+            <td>{{ item.lastN }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-<div id="table">
-<table class="table table-success caption-top">
-    <caption>Logged User</caption>
-  
-    <tbody>
-      <tr>
-        <th scope="row">Name</th>
-        <td>{{name}}</td>
-      
-      </tr>
-      <tr>
-        <th scope="row">Surname</th>
-        <td>{{surname}}</td>
-        
-      </tr>
-      <tr>
-        <th scope="row">Email</th>
-        
-        <td>{{email}}</td>
-      </tr>
-    </tbody>
-  </table>
+  <ng-template #AddNewContainer>
+    <div class="card" [hidden]="!(IsAddNew$ | async)" ngForm #myForm="ngForm">
+      <h5 class="card-header">Add New User</h5>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="FName">First Name: </label>
+          <input
+            class="form-control"
+            [ngClass]="{
+              'is-valid': F.valid && F.dirty,
+              'is-invalid': F.invalid && F.dirty
+            }"
+            type="text"
+            name="FName"
+            [(ngModel)]="FirstName"
+            required
+            minlength="3"
+            #F="ngModel"
+          />
+
+          <!-- error -->
+          <div
+            class="alert alert-danger"
+            [hidden]="!(F.dirty && F.errors?.['required'])"
+          >
+            Enter First Name
+          </div>
+          <div
+            class="alert alert-danger"
+            [hidden]="!(F.dirty && F.errors?.['minlength'])"
+          >
+            Minimum 3 characters needed for First Name
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="LName">Last Name:</label>
+          <input
+            class="form-control"
+            [ngClass]="{
+              'is-valid': L.valid && L.dirty,
+              'is-invalid': L.invalid && L.dirty
+            }"
+            type="text"
+            name="LName"
+            [(ngModel)]="this.LastName"
+            required
+            minlength="3"
+            #L="ngModel"
+          />
+
+          <!-- error -->
+          <div
+            class="alert alert-danger"
+            [hidden]="!(L.dirty && L.errors?.['required'])"
+          >
+            Enter Last Name
+          </div>
+          <div
+            class="alert alert-danger"
+            [hidden]="!(L.dirty && L.errors?.['minlength'])"
+          >
+            Minimum 3 characters needed for Last Name
+          </div>
+        </div>
+        <input
+          type="button"
+          class="btn btn-success"
+          value="Save"
+          (click)="Save()"
+          [disabled]="myForm.invalid"
+        />
+        &nbsp;
+        <input
+          type="button"
+          class="btn btn-danger"
+          value="Cancel"
+          (click)="Cancel()"
+        />
+      </div>
+    </div>
+  </ng-template>
 </div>
